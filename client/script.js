@@ -2,15 +2,20 @@
 //THE TEST SERVER IS RUNNING ON LOCALHOST:3000//
 ////////////////////////////////////////////////
 
+
+
+
+
+
 // PROBLEM 1
 /*
     In the index.html file in this folder there is a button with an id of 'say-hello-button'!
 
     Use querySelector to select that button and save it to a variable called sayHelloButton
 */
-
+console.log('hey')
 // CODE HERE
-
+const sayHelloButton = document.querySelector("#say-hello-button")
 
 // PROBLEM 2
 /*
@@ -20,6 +25,17 @@
 */
 
 // CODE HERE
+function styleChanger(event){
+    if (event.type === "mouseover"){
+    event.target.style.background = "black";
+    event.target.style.color = "white";
+    } else if (event.type=== "mouseout"){
+        event.target.style.background = "#EFEFEF";
+        event.target.style.color = "black";
+    }
+}
+
+sayHelloButton.addEventListener("mouseover",styleChanger)
 
 
 // PROBLEM 3
@@ -32,7 +48,13 @@
 */
 
 // CODE HERE
+// function changeBack(){
+    // sayHelloButton.style.background = "#EFEFEF";
+    // sayHelloButton.style.color = "black";
+// }
 
+
+sayHelloButton.addEventListener("mouseout",styleChanger)
 
 // PROBLEM 4
 /*
@@ -45,6 +67,7 @@
 const sayHello = () => {
     axios.get('http://localhost:3000/say-hello').then((res) => {
         let helloText = document.getElementById('hello-text');
+        console.log("insayhellofunction")
         helloText.style.display = 'block';
         helloText.style.backgroundColor = 'green';
         helloText.textContent = res.data;
@@ -53,7 +76,7 @@ const sayHello = () => {
 // DO NOT EDIT FUNCTION
 
 // CODE HERE
-
+sayHelloButton.addEventListener("click",sayHello)
 
 // PROBLEM 5 
 /*
@@ -67,7 +90,16 @@ const sayHello = () => {
 */ 
 
 const ohMy = () => {
-    // YOUR CODE HERE
+    axios.get('http://localhost:3000/animals').then(res => {
+        const animalArray = res.data;
+        for (let i = 0; i < animalArray.length; i++){
+            const docBody = document.querySelector("body")
+            const para = document.createElement("p")
+            para.textContent = animalArray[i]
+            docBody.appendChild(para)
+
+        }
+    })
 }
 
 document.getElementById('animals-button').addEventListener('click', ohMy)
@@ -86,9 +118,14 @@ document.getElementById('animals-button').addEventListener('click', ohMy)
     We'll be updating this function in the next problem.
 */
 
-const repeatMyParam = () => {
-    //YOUR CODE HERE
+const repeatMyParam = (stringArg) => {
+    axios.get(`http://localhost:3000/repeat/${stringArg}`)
+    .then(response => {
+        document.getElementById("repeat-text").textContent = response.data
+    })
 }
+
+document.getElementById("repeat-button").addEventListener("click",repeatMyParam)
 
 // PROBLEM 7
 /*
@@ -111,8 +148,13 @@ const repeatMyParam = () => {
 */
 
 // CODE HERE
-
-
+function getRequest(){
+    axios.get('http://localhost:3000/query-test/?name=joe&age=27')
+    .then(response => {
+        console.log(response.data)
+    })
+}
+document.getElementById("query-button").addEventListener("click",getRequest)
 
 ////////////////
 //INTERMEDIATE//
